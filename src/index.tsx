@@ -10,7 +10,7 @@ import { rootReducer } from './reducers/index'
 import './index.css';
 
 const store = createStore<StoreState>(rootReducer, {
-  components: {}
+  components: new Map()
 })
 
 ReactDOM.render(

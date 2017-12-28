@@ -7,6 +7,7 @@ interface Props {
   sid: string
   purchaseComponent?: any
   sellComponent?: any
+  id?: string
 }
 
 class SummaryCalculator extends React.PureComponent<Props> {
@@ -15,14 +16,16 @@ class SummaryCalculator extends React.PureComponent<Props> {
     const { subTotal: buySubTotal} = this.props.purchaseComponent
     const { subTotal: sellSubTotal} = this.props.sellComponent
 
-    debugger
     return sellSubTotal - buySubTotal
   }
 
   render() {
+    
+    if (!this.props.purchaseComponent || !this.props.sellComponent) return null
+    const { id } = this.props
     const difference = this.getSummary()
 
-    return (<div className="calculatorContainer" style={{ width: '834px' }}>
+    return (<div className="calculatorContainer" style={{ width: '834px' }} key={id}>
       <h3>Summary</h3>
       <label htmlFor="difference" className="rowData">Difference</label>
       <input name="difference" value={difference} className="rowData" disabled />

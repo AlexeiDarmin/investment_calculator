@@ -1,14 +1,22 @@
 import * as React from 'react';
 import { StoreState } from '../../types/index';
 import { connect } from 'react-redux';
-import { updateField } from '../../actions/index';
+import { updateField, addComponent } from '../../actions/index';
 
 interface Props {
   id: string
   component?: any
   updateField?: any
+  addComponent?: any
+  key: string
 }
 class SellCalculator extends React.PureComponent<Props> {
+
+  componentWillMount(){
+    const { addComponent, id } = this.props
+    
+    addComponent(id)
+  }
 
   handleOnChange = (e: any) => {
     const { name, value } = e.target
@@ -35,9 +43,12 @@ class SellCalculator extends React.PureComponent<Props> {
   }
 
   render() {
+    if (!this.props.component) return null
+
+    const { id } = this.props
     const { shareQuantity, sharePrice, subTotal } = this.props.component
 
-    return (<div className="calculatorContainer">
+    return (<div className="calculatorContainer" key={id}>
       <h3>Sell</h3>
       <label htmlFor="shareQuantity" className="rowData">Share quantity</label>
       <input name="shareQuantity" value={shareQuantity} onChange={this.handleOnChange} className="rowData" />
@@ -59,4 +70,4 @@ function mapStateToProps(state: StoreState, props: Props) {
   }
 }
 
-export default connect(mapStateToProps, { updateField })(SellCalculator as any);
+export default connect(mapStateToProps, { updateField, addComponent })(SellCalculator as any);

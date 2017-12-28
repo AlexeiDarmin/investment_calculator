@@ -1,5 +1,5 @@
 export interface StoreState {
-  components: any
+  components: Map<string, Component>
 }
 
 export interface Component {
